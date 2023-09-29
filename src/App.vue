@@ -47,11 +47,11 @@ header {
 </style> -->
 
 <template>
-  <Button-thor text="Thwwor"></Button-thor>
-
-  <input type="text" v-model="data.nama">
-  <input type="text" v-model="data.kelas">
-  <button @click="addKelas" v-if="!isEdit">Tambah kelas</button>
+  <BtnEdit title-thor="thor" />
+  <btn-edit :title-thor="titleThor"></btn-edit>
+  <Input v-model:input="data.nama" :value="data.nama" />
+  <Input v-model:input="data.kelas" :value="data.kelas" />
+  <BtnSubmit @click-tambah="addKelas" v-if="!isEdit" />
   <button @click="Update(data.id)" v-if="isEdit">Edit kelas</button>
   <table>
     <tr>
@@ -61,30 +61,79 @@ header {
     <tr v-for="item in Datakelas">
       <td>{{ item.nama }}</td>
       <td>{{ item.kelas }}</td>
-      <td><button @click="Delete(item.id)">Hapus</button>
+      <td>
+        <BtnDelete @Delete-event="Delete" :id="item.id" />
         <button @click="Edit(item.id)">Edit</button>
       </td>
     </tr>
   </table>
+  <br>
+  <br>
+  <br>
+  <BtnThor @getId="GetId" :edit="isEdit" id="1" name="radit"></BtnThor>
+  {{ id }}
+  <Test></Test>
+  <Test />
+  <br>
+
+  <Button name="zaen"></Button>
+  <p>-------------</p>
+  <br>
+  <br>
+  <!-- <Inputan v-model:inputan="nama" name="nama" id="nama" class="border"></Inputan>
+  {{ nama }} -->
+  <Card>
+    <template v-slot:button>
+      <button>Thor</button>
+    </template>
+  </Card>
 </template>
 <script>
-import Btn from '@/Btn.vue';
+import BtnThor from '@/components/BtnThor.vue';
+import Test from '@/component-test/Test.vue';
+import Button from '@/components/Button.vue';
+import Inputan from '@/components/Inputan.vue';
+import Card from '@/components/Card.vue';
+
+import BtnEdit from '@/components/BtnEdit.vue';
+import BtnDelete from '@/components/BtnDelete.vue';
+import BtnSubmit from '@/components/BtnSubmit.vue';
+import Input from '@/components/Input.vue';
 export default {
+  provide: {
+    nama: 'thor'
+  },
   components: {
-    'Button-thor': Btn
+    Card,
+    Inputan,
+    Test,
+    Button,
+    BtnThor,
+    BtnEdit,
+    'btn-edit': BtnEdit,
+    BtnDelete,
+    BtnSubmit,
+    Input
   },
   data() {
     return {
+      titleThor: 'thoran',
       Datakelas: [{ id: Date.now(), nama: 'thor', kelas: 'XB' }],
       data: {
         id: '',
         nama: '',
         kelas: ''
       },
-      isEdit: false
+      id: 0,
+      nama: 'farhan',
+      isEdit: true
     }
   },
   methods: {
+    GetId(id, id2) {
+      this.id += id2;
+      this.nama = 'thor';
+    },
     addKelas() {
       this.data.id = Date.now();
 
@@ -121,3 +170,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.border {
+  border: 1px solid black;
+}
+</style>

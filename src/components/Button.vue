@@ -1,8 +1,9 @@
 <template>
-    <button>{{ text }}</button>
+    <button> {{ name }}</button>
 </template>
 <script>
 export default {
-    props: ['text']
+    props: ['name']
+
 }
 </script>
